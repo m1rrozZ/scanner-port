@@ -24,17 +24,14 @@ def print_logo():
 
 
 def scan_port(host, port):
-    try:
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-            sock.settimeout(1)
-            if sock.connect_ex((host, port)) == 0:
-                try:
-                    service = socket.getservbyport(port, "tcp")
-                except (socket.error, OSError):
-                    service = "uknown"
-                return port, service
-    except Exception:
-        pass
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+        sock.settimeout(1)
+        if sock.connect_ex((host, port)) == 0:
+            try:
+                service = socket.getservbyport(port, "tcp")
+            except (socket.error, OSError):
+                service = "unknown"
+            return port, service
     return None, None
 
 
